@@ -5,14 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using KJHelloAzure.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace KJHelloAzure.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IConfiguration Configuration;
+
+        public HomeController(IConfiguration configuration) {
+            this.Configuration = configuration;
+        }
         public IActionResult Index()
         {
-            return View();
+            var model = Configuration["Greeting"];
+            return View("Index", model);
         }
 
         public IActionResult About()
