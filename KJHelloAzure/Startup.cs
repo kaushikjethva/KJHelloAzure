@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using KJHelloAzure.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using KJHelloAzure.Services;
 
 namespace KJHelloAzure
 {
@@ -38,9 +39,11 @@ namespace KJHelloAzure
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped<ICourseStore, CourseStore>();
+            services.AddScoped<ImageStore, ImageStore>();
             services.AddApplicationInsightsTelemetry();
         }
 
